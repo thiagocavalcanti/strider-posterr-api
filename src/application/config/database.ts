@@ -28,12 +28,14 @@ pool.connect((err, client, done) => {
   })
 })
 
-const poolTest = () => {
-  pool.query('SELECT NOW()', (err) => {
+export const databaseHealthCheck = (currPoll) => {
+  currPoll.query('SELECT NOW()', (err) => {
     if (err) {
       console.log(err.stack)
+      return false
     } else {
-      console.log("Connected to database with success!")
+      console.log("Database health ok")
+      return true
     }
   })
 }

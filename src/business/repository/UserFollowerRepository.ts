@@ -4,7 +4,7 @@ type Create = (userFollower: UserFollower) => void
 type Delete = (id: number) => void
 type GetByFollowingIdAndFollowerId = (followingUserId: number, followerUserId: number) => UserFollower
 
-export interface UserRepository{
+export default interface UserFollowerRepository{
     create: Create,
     delete: Delete,
     getByFollowingIdAndFollowerId: GetByFollowingIdAndFollowerId
