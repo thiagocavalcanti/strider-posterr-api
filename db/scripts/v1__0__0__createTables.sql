@@ -1,6 +1,6 @@
 create table users (
 	id serial primary key,
-	username varchar(14) not null,
+	username varchar(14) unique not null,
 	created_at timestamp default now() not null
 );
 
