@@ -1,15 +1,22 @@
-import PortRepository from "../../business/repository/PostRepository"
-import Post from "../../business/entities/Post"
-import UserRepository, { OrderBy } from "../../business/repository/UserRepository"
-import { OrderOrientation } from "../../common/CommonTypes"
+import UserRepository from "../../business/repository/UserRepository"
+import User from "../../business/entities/User"
+import _, { dbClient } from "../config/database"
 
+const getByIdImpl = async (id: number) => {
+    const client = await dbClient()
+    let response
+    try{
+        response = await dbClient().query("SELECT * FROM users where id = $1", [id])
+    } finally{
+        client.release()
+        console.log(`Get user with id ${id} with success`)
+    }
+    return response.rows[0] as User 
+}
 
-const getByIdImpl = (id: number) => null
-const getPostsById = (id: number, page: number, pageSize: number, orderOrientation: OrderOrientation,  orderBy: OrderBy) => []
 
 const UserRepositoryImpl: UserRepository = {
     getById: getByIdImpl
-    getPostsById: getPostsById
 }
 
 export default UserRepositoryImpl

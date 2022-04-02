@@ -1,8 +1,8 @@
 import UserFollower from "../entities/UserFollower"
 
-type Create = (userFollower: UserFollower) => void
-type Delete = (id: number) => void
-type GetByFollowingIdAndFollowerId = (followingUserId: number, followerUserId: number) => UserFollower
+type Create = (userFollower: UserFollower) => Promise<void>
+type Delete = (id: number) => Promise<void>
+type GetByFollowingIdAndFollowerId = (followingUserId: number, followerUserId: number) => Promise<UserFollower>
 
 export default interface UserFollowerRepository{
     create: Create,

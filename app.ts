@@ -1,12 +1,12 @@
 import { config as envConfig } from "dotenv"
 envConfig()
 const express = require('express');
-import dbPoll, { databaseHealthCheck } from "./src/application/config/database"
+import _, { dbClient, databaseHealthCheck } from "./src/application/config/database"
 
 
 const app = express()
-app.get('/health', (req, res) => {
-    databaseHealthCheck(dbPoll)
+app.get('/health', (_, res) => {
+    databaseHealthCheck(dbClient())
     res.send('Hello World!')
 })
 

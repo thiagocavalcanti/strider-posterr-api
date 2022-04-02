@@ -40,4 +40,6 @@ export const databaseHealthCheck = (currPoll) => {
   })
 }
 
+export const dbClient: () => any = async () => await pool.connect()
+
 export default pool
