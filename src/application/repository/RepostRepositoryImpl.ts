@@ -12,7 +12,7 @@ const createImpl = async (repost: Repost) => {
         return databaseErrorHandler(client, e, false)
     }
     client.release()
-    console.log(`Created repost for userId ${repost.userId} with success`)
+    console.debug(`Created repost for userId ${repost.userId} with success`)
     return true
 }
 

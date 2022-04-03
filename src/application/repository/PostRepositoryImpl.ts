@@ -16,7 +16,7 @@ const createImpl = async (post: Post) => {
         return databaseErrorHandler(client, e, false)
     }
     client.release()
-    console.log(`Created post for userId ${post.userId} with success`)
+    console.debug(`Created post for userId ${post.userId} with success`)
     return true
 }
 const getWithRepostsAndQuotesImpl = async (page: number, pageSize: number, followerUserId?: number, orderOrientation: OrderOrientation = OrderOrientation.desc, orderBy: OrderBy = OrderBy.createdAt): Promise<PostPagination> => {
@@ -32,7 +32,7 @@ const getWithRepostsAndQuotesImpl = async (page: number, pageSize: number, follo
     }
 
     client.release()
-    console.log(`Get all posts with success`)
+    console.debug(`Get all posts with success`)
     const posts = response.rows as Array<Post | Repost | Quote>
     return {
         posts,
@@ -57,7 +57,7 @@ const getWithRepostsAndQuotesByUserIdImpl = async (userId: number, page: number,
     }
 
     client.release()
-    console.log(`Get all posts for user ${userId} with success`)
+    console.debug(`Get all posts for user ${userId} with success`)
     const posts = response.rows as Array<Post | Repost | Quote>
     return {
         posts,
@@ -80,7 +80,21 @@ const countWithRepostsAndQuotesByUserIdImpl = async (userId: number) => {
     }
 
     client.release()
-    console.log(`Get count of posts for user ${userId} with success`)
+    console.debug(`Get count of posts for user ${userId} with success`)
+    return response
+}
+
+const countWithRepostsAndQuotesByUserIdAndCreatedAtImpl = async (userId: number, createdAt: Date) => {
+    const client = await dbClient()
+    let response
+    try {
+        response = Number((await client.query("SELECT count(id) from all_posts where user_id = $1 and created_at >= $2", [userId, createdAt])).rows[0].count)
+    } catch (e) {
+        return databaseErrorHandler(client, e)
+    }
+
+    client.release()
+    console.debug(`Get count of latests posts for user ${userId} considering a date of ${createdAt} with success`)
     return response
 }
 
@@ -88,7 +102,8 @@ const PortRepositoryImpl: PortRepository = {
     create: createImpl,
     getWithRepostsAndQuotes: getWithRepostsAndQuotesImpl,
     getWithRepostsAndQuotesByUserId: getWithRepostsAndQuotesByUserIdImpl,
-    countWithRepostsAndQuotesByUserId: countWithRepostsAndQuotesByUserIdImpl
+    countWithRepostsAndQuotesByUserId: countWithRepostsAndQuotesByUserIdImpl,
+    countWithRepostsAndQuotesByUserIdAndCreatedAt: countWithRepostsAndQuotesByUserIdAndCreatedAtImpl
 }
 
 export default PortRepositoryImpl

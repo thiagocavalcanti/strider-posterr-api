@@ -21,7 +21,7 @@ pool.connect((err, client, done) => {
   client.query('SELECT NOW()', (err) => {
     done()
     if (err) {
-      console.log(err.stack)
+      console.error(err.stack)
     } else {
       console.log("Connected to database with success!")
     }
@@ -31,7 +31,7 @@ pool.connect((err, client, done) => {
 export const databaseHealthCheck = (currPoll) => {
   currPoll.query('SELECT NOW()', (err) => {
     if (err) {
-      console.log(err.stack)
+      console.error(err.stack)
       return false
     } else {
       console.log("Database health ok")

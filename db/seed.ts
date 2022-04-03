@@ -8,7 +8,7 @@ const seed = async () => {
     const client = await dbClient()
     try {
         await client.query(seedQuery)
-        console.log("Seed with sucess")
+        console.debug("Seed with sucess")
     } finally {
         await client.release()
         process.exit(0)

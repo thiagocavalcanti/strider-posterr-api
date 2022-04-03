@@ -15,7 +15,7 @@ const routesFactory = (server) => {
 const applyMiddleware = (express, server) => {
     server.use(express.json())
     server.use('/v1/*', serverMiddleware)
-    server.use('/v1/posts', postValidatorMiddleware)
+    server.use(/^\/v1\/posts$/, postValidatorMiddleware)
 }
 export default async (express) => {
     const server = express()

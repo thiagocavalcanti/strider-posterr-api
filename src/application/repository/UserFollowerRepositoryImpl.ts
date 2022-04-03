@@ -14,7 +14,7 @@ const createImpl = async (userFollower: UserFollower) => {
     }
 
     client.release()
-    console.log(`Created follow link between following user ${userFollower.followingUserId} with follower ${userFollower.followerUserId} with success`)
+    console.debug(`Created follow link between following user ${userFollower.followingUserId} with follower ${userFollower.followerUserId} with success`)
     return true
 }
 const deleteImpl = async (id: number) => {
@@ -26,7 +26,7 @@ const deleteImpl = async (id: number) => {
     }
 
     client.release()
-    console.log(`Deleted link ${id} with success`)
+    console.debug(`Deleted link ${id} with success`)
     return true
 }
 const getByFollowingIdAndFollowerIdImpl = async (followingUserId: number, followerUserId: number) => {
@@ -39,7 +39,7 @@ const getByFollowingIdAndFollowerIdImpl = async (followingUserId: number, follow
     }
 
     client.release()
-    console.log(`Get link between following user ${followingUserId} and follower ${followerUserId} with success`)
+    console.debug(`Get link between following user ${followingUserId} and follower ${followerUserId} with success`)
     return response.rows[0] as UserFollower
 }
 const getUserStatisticsImpl = async (userId: number) => {

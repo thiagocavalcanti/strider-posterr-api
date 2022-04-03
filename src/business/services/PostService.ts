@@ -1,4 +1,5 @@
 import { OrderOrientation } from "../../common/CommonTypes";
+import { getTodayAtBeginning } from "../../common/DateUtils";
 import { getOrHandleError } from "../../common/FunctionUtils";
 import PostPagination from "../dto/PostPagination";
 import Post from "../entities/Post";
@@ -12,6 +13,7 @@ export default class PostService {
     postRepository: PostRepository;
     repostRepository: RepostRepository;
     quoteRepository: QuoteRepository;
+    maxPostsPerDay: number = 5;
 
     constructor(postRepository: PostRepository, repostRepository: RepostRepository, quoteRepository: QuoteRepository) {
         this.postRepository = postRepository;
@@ -28,18 +30,36 @@ export default class PostService {
     }
 
     async createPost(post: Post): Promise<boolean> {
+        if(!await this.validateTotalOfPostsPerDay(post.userId)){
+            return false
+        }
         return getOrHandleError(async () => await this.postRepository.create(post))
     }
 
     async createRepost(repost: Repost): Promise<boolean> {
+        if(!await this.validateTotalOfPostsPerDay(repost.userId)){
+            return false
+        }
         return getOrHandleError(async () => await this.repostRepository.create(repost))
     }
 
     async createQuote(quote: Quote): Promise<boolean> {
+        if(!await this.validateTotalOfPostsPerDay(quote.userId)){
+            return false
+        }
         return getOrHandleError(async () => await this.quoteRepository.create(quote))
     }
     
     async countWithRepostsAndQuotesByUserId(userId: number): Promise<number> {
         return getOrHandleError(async () => await this.postRepository.countWithRepostsAndQuotesByUserId(userId));
+    }
+
+    private async validateTotalOfPostsPerDay(userId: number): Promise<boolean> {
+        const count =  await getOrHandleError(async () => await this.postRepository.countWithRepostsAndQuotesByUserIdAndCreatedAt(userId, getTodayAtBeginning()))
+        if(count === null || count >= this.maxPostsPerDay){
+            console.debug(`User ${userId} has posted more than ${this.maxPostsPerDay}. Total: ${count}`);
+            return false
+        } 
+        return true
     }
 }

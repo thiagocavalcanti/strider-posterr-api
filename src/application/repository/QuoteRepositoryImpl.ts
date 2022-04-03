@@ -13,7 +13,7 @@ const createImpl = async (quote: Quote) => {
     }
 
     client.release()
-    console.log(`Created quote for userId ${quote.userId} with success`)
+    console.debug(`Created quote for userId ${quote.userId} with success`)
     return true
 }
 

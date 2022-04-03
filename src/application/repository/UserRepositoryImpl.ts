@@ -14,7 +14,7 @@ const getByIdImpl = async (id: number) => {
     }
 
     client.release()
-    console.log(`Get user with id ${id} with success`)
+    console.debug(`Get user with id ${id} with success`)
     return response.rows
         ? { id: response.rows[0].id, username: response.rows[0].username, createdAt: dateToUserFriendly(response.rows[0]['created_at']) } as User
         : null
