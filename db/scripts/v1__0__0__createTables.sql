@@ -2,6 +2,7 @@ create table users (
 	id serial primary key,
 	username varchar(14) unique not null,
 	created_at timestamp default now() not null
+	CONSTRAINT username_regexp check (username ~ '^[a-zA-Z0-9]+\Z')
 );
 
 create table posts(

@@ -1,53 +1,53 @@
 -- Seeding users
 INSERT INTO USERS(id, username) VALUES(
-    1,'Thiago'
+    nextval('users_id_seq'),'Thiago'
 );
 INSERT INTO USERS(id, username) VALUES(
-    2,'Alberto'
+    nextval('users_id_seq'),'Alberto'
 );
 INSERT INTO USERS(id, username) VALUES(
-    3,'Arthur'
+    nextval('users_id_seq'),'Arthur'
 );
 INSERT INTO USERS(id, username) VALUES(
-    4,'my_h$ro'
+    nextval('users_id_seq'),'MyHero123'
 );
 INSERT INTO USERS(id, username) VALUES(
-    5,'Eren'
+    nextval('users_id_seq'),'Eren'
 );
 
 -- Seeding posts
 INSERT INTO POSTS(id, user_id, message) VALUES(
-    1,
+    nextval('posts_id_seq'),
     1,
     'My first post ever!'
 );
 INSERT INTO POSTS(id, user_id, message) VALUES(
-    2,
+     nextval('posts_id_seq'),
     2,
     'I love sushi'
 );
 INSERT INTO POSTS(id, user_id, message) VALUES(
-    3,
+    nextval('posts_id_seq'),
     2,
     'I hate macarroni'
 );
 INSERT INTO POSTS(id, user_id, message) VALUES(
-    4,
+    nextval('posts_id_seq'),
     2,
     'I love soccer'
 );
 INSERT INTO POSTS(id, user_id, message) VALUES(
-    5,
+    nextval('posts_id_seq'),
     2,
     'I love recife'
 );
 INSERT INTO POSTS(id, user_id, message) VALUES(
-    6,
+    nextval('posts_id_seq'),
     3,
     'Let''s go Sport'
 );
 INSERT INTO POSTS(id, user_id, message) VALUES(
-    7,
+    nextval('posts_id_seq'),
     4,
     'I''m so crazyyy!!'
 );

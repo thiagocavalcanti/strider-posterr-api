@@ -1,4 +1,5 @@
 import serverMiddleware from "../middleware/serverMiddleware";
+import postValidatorMiddleware from "../middleware/validatorMiddleware";
 import FollowerRoutes from "../routes/FollowerRoutes";
 import HealthRoutes from "../routes/HealthRoutes";
 import PostsRoutes from "../routes/PostsRoutes";
@@ -14,6 +15,7 @@ const routesFactory = (server) => {
 const applyMiddleware = (express, server) => {
     server.use(express.json())
     server.use('/v1/*', serverMiddleware)
+    server.use('/v1/posts', postValidatorMiddleware)
 }
 export default async (express) => {
     const server = express()
