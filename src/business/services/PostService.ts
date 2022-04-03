@@ -38,4 +38,8 @@ export default class PostService {
     async createQuote(quote: Quote): Promise<boolean> {
         return getOrHandleError(async () => await this.quoteRepository.create(quote))
     }
+    
+    async countWithRepostsAndQuotesByUserId(userId: number): Promise<number> {
+        return getOrHandleError(async () => await this.postRepository.countWithRepostsAndQuotesByUserId(userId));
+    }
 }

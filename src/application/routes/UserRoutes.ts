@@ -8,9 +8,9 @@ import QuoteRepositoryImpl from "../repository/QuoteRepositoryImpl"
 import UserFollowerRepositoryImpl from "../repository/UserFollowerRepositoryImpl"
 
 export default async (server) => {
-    const userService = await new UserService(UserRepositoryImpl, PostRepositoryImpl, UserFollowerRepositoryImpl)
     const postService = await new PostService(PostRepositoryImpl, RepostRepositoryImpl, QuoteRepositoryImpl)
     const userFollowerService = await new UserFollowerService(UserFollowerRepositoryImpl)
+    const userService = await new UserService(UserRepositoryImpl, postService, userFollowerService)
 
     server.get('/v1/users/:id', async (req, res) => {
         const { id } = req.params

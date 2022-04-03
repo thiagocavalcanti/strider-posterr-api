@@ -1,4 +1,5 @@
 import { getOrHandleError } from "../../common/FunctionUtils";
+import FollowerStatistics from "../dto/FollowerStatistics";
 import UserFollower from "../entities/UserFollower";
 import UserFollowerRepository from "../repository/UserFollowerRepository";
 
@@ -19,5 +20,9 @@ export default class UserFollowerService {
 
     async deleteConnection(id: number): Promise<boolean> {
         return getOrHandleError(async () => await this.userFollowerRepository.delete(id));
+    }
+
+    async getUserStatistics(userId: number): Promise<FollowerStatistics> {
+        return getOrHandleError(async () => await this.userFollowerRepository.getUserStatistics(userId));
     }
 }
