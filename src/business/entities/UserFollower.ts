@@ -1,6 +1,6 @@
 export default interface UserFollower {
-  id: number
+  id?: number
   followingUserId: number
   followerUserId: number
-  createdAt: string,
+  createdAt?: string,
 };

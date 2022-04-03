@@ -1,6 +1,6 @@
 export default interface Repost {
-  id: number
+  id?: number
   userId: number,
   postId: number,
-  createdAt: string,
+  createdAt?: string,
 };

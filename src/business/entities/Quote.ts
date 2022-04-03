@@ -1,8 +1,8 @@
 export default interface Quote {
-  id: number
+  id?: number
   userId: number,
   message: string,
   postId: number,
-  createdAt: string,
+  createdAt?: string,
 };
 

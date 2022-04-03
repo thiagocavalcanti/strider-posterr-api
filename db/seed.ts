@@ -6,11 +6,12 @@ import * as fs from "fs";
 const seed = async () => {
     const seedQuery = fs.readFileSync(__dirname + "/seeding.sql", { encoding: "utf-8" });
     const client = await dbClient()
-    try{
-        const res = await client.query(seedQuery)
+    try {
+        await client.query(seedQuery)
         console.log("Seed with sucess")
-    } finally{
+    } finally {
         await client.release()
+        process.exit(0)
     }
 
 }

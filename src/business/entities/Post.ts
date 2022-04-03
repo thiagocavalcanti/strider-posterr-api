@@ -1,6 +1,6 @@
 export default interface Post {
-  id: number
+  id?: number
   userId: number,
   message: string,
-  createdAt: string,
+  createdAt?: string,
 };
