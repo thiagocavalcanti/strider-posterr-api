@@ -52,7 +52,7 @@ npm run start
 3. Add api call to populate component
 4. Implement pagination
 5. Create unit test for the components
-## Phase 3 - Self-critique & scaling
+## Phase 3 - Critique
 ### Improvements
 * Change pagination to use a SQL Seek Method or Keyset Pagination to improve perfomance ([example](https://vladmihalcea.com/sql-seek-keyset-pagination/))
 * Add some migration tool to control and add versioning for database
