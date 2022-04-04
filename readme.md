@@ -6,6 +6,21 @@ The main goal is to develop an API for an application called "Posterr", similar 
 * Express
 * Postgresql
 * TypeScript
+
+# Env
+* PGUSER: The postgres user (default postgres)
+* PGHOST: The postgres host (default postgres)
+* PGPASSWORD: The postgres password (default postgres)
+* PGDATABASE: The postgres database (default postgres)
+* PGPORT: The postgres post (default 5432)
+# Running
+### 1 - Starting postgresql database
+`docker-compose -f docker-compose.yaml up` 
+### 2 - Run migrations and seed
+npm run seed
+
+### 3 - Start application
+npm run start
 # Phases
 ## Phase 1 - Coding
 - [x] Build out a RESTful API 
