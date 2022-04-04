@@ -98,12 +98,39 @@ const countWithRepostsAndQuotesByUserIdAndCreatedAtImpl = async (userId: number,
     return response
 }
 
+const searchWithQuotesImpl = async (search: string, page: number, pageSize: number, orderOrientation: OrderOrientation = OrderOrientation.desc, orderBy: OrderBy = OrderBy.createdAt): Promise<PostPagination> => {
+    const client = await dbClient()
+    let response, count
+    try {
+        response = orderOrientation === OrderOrientation.asc
+            ? await client.query("SELECT * from all_posts where type != 'repost' and message ilike '%' || $1 || '%' order by $2 offset $3 limit $4", [search, orderBy, (page - 1) * pageSize, pageSize])
+            : await client.query("SELECT * from all_posts where type != 'repost' and message ilike '%' || $1 || '%' order by $2 desc offset $3 limit $4", [search, orderBy, (page - 1) * pageSize, pageSize])
+        count = Number((await client.query("SELECT count(id) from all_posts where type != 'repost' and message ilike '%' || $1 || '%'", [search])).rows[0].count)
+    } catch (e) {
+        return databaseErrorHandler(client, e)
+    }
+
+    client.release()
+    console.debug(`Search within all posts with success`)
+    const posts = response.rows as Array<Post | Repost | Quote>
+    return {
+        posts,
+        pagination: {
+            page,
+            pageSize,
+            totalItems: count,
+            totalPages: Math.ceil(count / pageSize),
+        }
+    }
+}
+
 const PortRepositoryImpl: PortRepository = {
     create: createImpl,
     getWithRepostsAndQuotes: getWithRepostsAndQuotesImpl,
     getWithRepostsAndQuotesByUserId: getWithRepostsAndQuotesByUserIdImpl,
     countWithRepostsAndQuotesByUserId: countWithRepostsAndQuotesByUserIdImpl,
-    countWithRepostsAndQuotesByUserIdAndCreatedAt: countWithRepostsAndQuotesByUserIdAndCreatedAtImpl
+    countWithRepostsAndQuotesByUserIdAndCreatedAt: countWithRepostsAndQuotesByUserIdAndCreatedAtImpl,
+    searchWithQuotes: searchWithQuotesImpl
 }
 
 export default PortRepositoryImpl

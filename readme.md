@@ -41,9 +41,11 @@ The main goal is to develop an API for an application called "Posterr", similar 
 ### Improvements
 * Change pagination to use a SQL Seek Method or Keyset Pagination to improve perfomance ([example](https://vladmihalcea.com/sql-seek-keyset-pagination/))
 * Add some migration tool to control and add versioning for database
-* Add more unit tests
+* Add more unit tests, especially in services
 * Implement integration tests for repositories
 ### Scaling
 * Evaluate queries to look for tunning, create index, etc
 * Create some cache using, for example, Redis to improve performance
 * Implement some charge test to test application's performance
+* Implement some security for the apis, using token for example
+* We could use and event-driven approach with Rabbitmq, AWS SQS/SNS, Kafka, etc

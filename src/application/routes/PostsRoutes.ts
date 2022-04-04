@@ -7,9 +7,9 @@ export default async (server) => {
     const postService = await new PostService(PostRepositoryImpl, RepostRepositoryImpl, QuoteRepositoryImpl)
 
     server.get('/v1/posts', async (req, res) => {
-        const { page, pageSize, sort, direction, visibility } = req.query
+        const { page, pageSize, sort, direction, visibility, search } = req.query
         const userId = visibility === 'all' ? null : Number(req.headers['user-id'])
-        const result = await postService.getWithRepostsAndQuotes(Number(page), Number(pageSize), userId, sort, direction)
+        const result = await postService.getWithRepostsAndQuotes(Number(page), Number(pageSize), userId, sort, direction, search)
         result ? res.send(result) : res.status(204).send()
     })
     server.post('/v1/posts', async (req, res) => {

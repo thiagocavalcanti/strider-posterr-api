@@ -21,8 +21,11 @@ export default class PostService {
         this.quoteRepository = quoteRepository;
     }
 
-    async getWithRepostsAndQuotes(page: number, pageSize: number, followerUserId?: number, direction: OrderOrientation = OrderOrientation.desc, sort: OrderBy = OrderBy.createdAt): Promise<PostPagination> {
-        return getOrHandleError(async () => await this.postRepository.getWithRepostsAndQuotes(page, pageSize, followerUserId, direction, sort));
+    async getWithRepostsAndQuotes(page: number, pageSize: number, followerUserId?: number, direction: OrderOrientation = OrderOrientation.desc, sort: OrderBy = OrderBy.createdAt, search?: string): Promise<PostPagination> {
+        return getOrHandleError(async () => 
+        search 
+            ? await this.postRepository.searchWithQuotes(search, page, pageSize, direction, sort)
+            : await this.postRepository.getWithRepostsAndQuotes(page, pageSize, followerUserId, direction, sort));
     }
 
     async getByUserIdWithRepostAndQuotes(userId: number, page: number, pageSize: number, direction: OrderOrientation = OrderOrientation.desc, sort: OrderBy = OrderBy.createdAt): Promise<PostPagination> {
