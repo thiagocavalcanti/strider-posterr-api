@@ -1,0 +1,410 @@
+{
+	"info": {
+		"_postman_id": "d01e4586-55c1-4072-9a89-4dbabe5c2b4d",
+		"name": "Strider - Posterr",
+		"description": "# Introduction\nRESTful API for Posterr as an assessment for Strider company\n\n# Overview\nThis API handles posts and users main domains, including relations between then, such as followers, user's posts, etc \n\n# Authentication\nNo auth was required. Use the header \"user-id\" to send the current user id\n\n# Error Codes\n204 - If register is not found\n400 - General error in current resource\n404 - If resource is not found",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/v1/posts?page=1&pageSize=2&visibility=all&search=love",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "The current page"
+								},
+								{
+									"key": "pageSize",
+									"value": "2",
+									"description": "The page size (default 10)"
+								},
+								{
+									"key": "visibility",
+									"value": "all"
+								},
+								{
+									"key": "direction",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "createdAt",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "love",
+									"description": "The optional search (it'll return only post and quotes) "
+								}
+							]
+						},
+						"description": "**Response Example**\n\n``` json\n{\n  \"posts\": [\n    {\n      \"id\": 2987,\n      \"userId\": 98898,\n      \"type\": \"post\", // post, repost or quote\n      \"message\": \"my first post\",\n      \"createdAt\": \"Tue, 29 Mar 2022 03:13:41 GMT\" // UTC date\n    },\n    {\n      \"id\": 2988,\n      \"userId\": 98898,\n      \"type\": \"repost\", // post, repost or quote\n      \"postMessage\": \"woowww\",\n      \"postUserId\": 5000,  \n      \"createdAt\": \"Tue, 29 Mar 2022 03:13:41 GMT\" // UTC date\n    },\n    {\n      \"id\": 2989,\n      \"userId\": 98898,\n      \"type\": \"quote\", // post, repost or quote\n      \"message\": \"I agree!\",\n      \"postMessage\": \"woowww\",\n      \"postUserId\": 5000,  \n      \"createdAt\": \"Tue, 29 Mar 2022 03:13:41 GMT\" // UTC date\n    }\n  ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\": \"teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39 ho3ghuo3g1o3uy1g31yogoy31=teste com 39qeweeqweqqwwqeeqwqwewqeqweqweqweqewwqewqewqe \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/posts",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"posts"
+							]
+						},
+						"description": "**Observations**\n\n*   Max 5 posts per day (posts + reposts + quotes)\n    \n\n**Request body example**\n\n``` json\n{\n  \"message\":  \"i love beach\" // max 777\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Repost",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/v1/posts/:id/reposts",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"posts",
+								":id",
+								"reposts"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2",
+									"description": "The post id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Quote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\": \"I agree!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/posts/:id/quotes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"posts",
+								":id",
+								"quotes"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6",
+									"description": "The post id"
+								}
+							]
+						},
+						"description": "**Request body example**\n\n``` json\n{\n  \"message\": \"I agree!\" // Max 777 chars\n}\n\n```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/v1/users/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "The user id"
+								}
+							]
+						},
+						"description": "**Response body example**\n\n``` json\n{\n  \"id\": 4879,\n  \"username\": \"thiago\", // alphanumeric, max 14 chars\n  \"createdAt\": \"March 25, 2021\",\n  \"statistics\": {\n    \"followersAmount\": 54,\n    \"followingAmount\": 20,\n    \"postsAmount\": 500\n  }\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "User's Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/v1/users/:id/posts?page=1&pageSize=11&sort=created&direction=desc",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								":id",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "The current page (default 0)"
+								},
+								{
+									"key": "pageSize",
+									"value": "11",
+									"description": "The page size (default: 5)"
+								},
+								{
+									"key": "sort",
+									"value": "created",
+									"description": "The order by"
+								},
+								{
+									"key": "direction",
+									"value": "desc",
+									"description": "The direction of the ordenation"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "**Response body example**\n\n``` json\n{\n  \"posts\": [\n    {\n      \"id\": 2987,\n      \"userId\": 98898,\n      \"type\": \"post\", // post, repost or quote\n      \"message\": \"my first post\",\n      \"createdAt\": \"Tue, 29 Mar 2022 03:13:41 GMT\" // UTC date\n    },\n    {\n      \"id\": 2988,\n      \"userId\": 98898,\n      \"type\": \"repost\", // post, repost or quote\n      \"postMessage\": \"woowww\",\n      \"postUserId\": 5000,  \n      \"createdAt\": \"Tue, 29 Mar 2022 03:13:41 GMT\" // UTC date\n    },\n    {\n      \"id\": 2989,\n      \"userId\": 98898,\n      \"type\": \"quote\", // post, repost or quote\n      \"message\": \"I agree!\",\n      \"postMessage\": \"woowww\",\n      \"postUserId\": 5000,  \n      \"createdAt\": \"Tue, 29 Mar 2022 03:13:41 GMT\" // UTC date\n    }\n  ]\n}\n\n```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Followers",
+			"item": [
+				{
+					"name": "Followers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/v1/followers?followingUserId=3&followerUserId=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"followers"
+							],
+							"query": [
+								{
+									"key": "followingUserId",
+									"value": "3"
+								},
+								{
+									"key": "followerUserId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "**Response body example**\n\n``` json\n{\n  \"createdAt\": \"Tue, 29 Mar 2022 03:13:41 GMT\" // UTC date\n}\n\n```\n\n**Error codes**\n\n*   204: The following was not found between users\n*   400: General error"
+					},
+					"response": []
+				},
+				{
+					"name": "Follower",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"followingUserId\": 4,\r\n    \"followerUserId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/followers",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"followers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Follower",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{USER_ID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/v1/followers/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"followers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "USER_ID",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

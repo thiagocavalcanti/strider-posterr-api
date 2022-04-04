@@ -1,3 +1,5 @@
+# Author
+Thiago oliveira (https://www.linkedin.com/in/thiago-cavalcanti-9b4044a7/)
 # Description
 This project was developed for Strider using concepts of DDD by using a Hexagonal Architecure.
 The main goal is to develop an API for an application called "Posterr", similar to Twitter
@@ -21,6 +23,10 @@ npm run seed
 
 ### 3 - Start application
 npm run start
+
+# Testing
+In the src you'll find a Postman collection so you can try it out this application
+
 # Phases
 ## Phase 1 - Coding
 - [x] Build out a RESTful API 
